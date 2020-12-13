@@ -16,7 +16,6 @@ public class Listener {
     private Long id;
     private String name;
     private String surname;
-    @Column(unique = true)
     private String email;
     private String password;
     @ManyToMany

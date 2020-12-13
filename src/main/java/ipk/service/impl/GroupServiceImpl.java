@@ -56,7 +56,7 @@ public class GroupServiceImpl implements GroupService {
     public Group updateListener(Listener listener, Group group) {
         Listener listenerByEmail = listenerService.getByEmail(listener.getEmail());
         group.getListeners().remove(listenerByEmail);
-        listenerService.deleteById(listenerByEmail.getId());
+        groupRepository.save(group);
         Set<Role> roles = listener.getRoles();
         listenerByEmail.setRoles(roles);
         listenerByEmail.setName(listener.getName());
@@ -73,7 +73,6 @@ public class GroupServiceImpl implements GroupService {
     public Group deleteListenerFromGroup(Listener listener, Long id) {
         Group group = groupRepository.findById(id).orElseThrow(RuntimeException::new);
         group.getListeners().remove(listener);
-        listenerService.deleteById(listener.getId());
         groupRepository.save(group);
         return group;
     }
