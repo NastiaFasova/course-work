@@ -11,9 +11,9 @@
 <div class="container">
     <h1>Listener Management System</h1>
     <hr>
-    <h2>Update Listener</h2>
+    <h2>Update Teacher</h2>
 
-    <form action="#" th:action="@{/{id}/update-listener(id=${group.id})}" th:object="${listener}"
+    <form action="#" th:action="@{/save-teacher}" th:object="${teacher}"
           method="POST">
 
         <!-- Add hidden form field to handle update -->
@@ -23,9 +23,7 @@
 
         <input type="text" th:field="*{surname}" class="form-control mb-4 col-4">
 
-        <input type="text" th:field="*{email}" class="form-control mb-4 col-4">
-
-        <button type="submit" class="btn btn-info col-2"> Update Listener</button>
+        <button type="submit" class="btn btn-info col-2"> Update Teacher</button>
     </form>
 
     <hr>

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+
     <meta charset="ISO-8859-1">
     <title>Employee Management System</title>
 
@@ -49,6 +50,8 @@
         </tbody>
     </table>
 
+
+
     <div th:if = "${totalPages > 1}">
         <div class = "row col-sm-10">
             <div class = "col-sm-2">
@@ -71,6 +74,8 @@
             </div>
         </div>
     </div>
+    <a th:href="@{/subjects}" class="btn btn-primary">Subjects List</a>
+    <a th:href="@{/teachers}" class="btn btn-primary">Teachers List</a>
 </div>
 </body>
 </html>

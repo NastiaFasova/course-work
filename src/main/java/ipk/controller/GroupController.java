@@ -1,16 +1,12 @@
 package ipk.controller;
 
-import ipk.model.Group;
-import ipk.model.Lesson;
-import ipk.model.Listener;
-import ipk.service.GroupService;
-import ipk.service.LessonService;
-import ipk.service.ListenerService;
-import ipk.service.SpecialityService;
+import ipk.model.*;
+import ipk.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalTime;
 import java.util.List;
 
 @Controller
@@ -19,13 +15,20 @@ public class GroupController {
     private final SpecialityService specialityService;
     private final ListenerService listenerService;
     private final LessonService lessonService;
+    private final TeacherService teacherService;
+    private final SubjectService subjectService;
+    private final DayService dayService;
 
     public GroupController(GroupService groupService, SpecialityService specialityService,
-                           ListenerService listenerService, LessonService lessonService) {
+                           ListenerService listenerService, LessonService lessonService,
+                           TeacherService teacherService, SubjectService subjectService, DayService dayService) {
         this.groupService = groupService;
         this.specialityService = specialityService;
         this.listenerService = listenerService;
         this.lessonService = lessonService;
+        this.teacherService = teacherService;
+        this.subjectService = subjectService;
+        this.dayService = dayService;
     }
 
     @GetMapping("/{id}")
@@ -68,7 +71,6 @@ public class GroupController {
                                @ModelAttribute("listener")
                                        Listener listener) {
         Group group = groupService.findById(id);
-        listener.setId(null);
         groupService.updateListener(listener, group);
         return ( "redirect:/{id}/listeners");
     }
@@ -98,5 +100,45 @@ public class GroupController {
         Group group = groupService.findById(id);
         model.addAttribute("group", group);
         return "timetable";
+    }
+
+    @GetMapping("{id}/delete-lesson/{lesson-id}")
+    public String removeLesson(@PathVariable (value = "id") long id,
+                               @PathVariable ( value = "lesson-id") long lessonId) {
+        Lesson lesson = lessonService.getById(lessonId);
+        groupService.deleteLessonFromGroupById(lesson, id);
+        return "redirect:/{id}/timetable";
+    }
+
+    @GetMapping("{id}/timetable/create-lesson")
+    public String addLesson(@PathVariable (value = "id") Long id, Model model) {
+        Lesson lesson = new Lesson();
+        Teacher teacher = new Teacher();
+        Subject subject = new Subject();
+        List<Teacher> teachers = teacherService.getAll();
+        List<Subject> subjects = subjectService.getAll();
+        List<Day> days = dayService.getAll();
+        Group group = groupService.findById(id);
+        model.addAttribute("group", group);
+        model.addAttribute("lesson", lesson);
+        model.addAttribute("teachers", teachers);
+        model.addAttribute("subjects", subjects);
+        model.addAttribute("days", days);
+        model.addAttribute("time", LocalTime.of(0, 0));
+        model.addAttribute("teacher", teacher);
+        model.addAttribute("subject", subject);
+        return "createLesson";
+    }
+
+    @PostMapping("/{id}/timetable/save-lesson")
+    public String saveLesson(@PathVariable (value = "id") Long id,
+                               @ModelAttribute("lesson")
+                                       Lesson lesson,
+                             @RequestParam("teacher") Teacher teacher,
+                             @RequestParam("subject") Subject subject) {
+        Group group = groupService.findById(id);
+        lesson.setId(null);
+        groupService.addLessonToGroup(lesson, group);
+        return ( "redirect:/{id}/listeners");
     }
 }

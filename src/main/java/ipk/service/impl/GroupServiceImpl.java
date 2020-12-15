@@ -1,17 +1,11 @@
 package ipk.service.impl;
 
-import ipk.model.Group;
-import ipk.model.Lesson;
-import ipk.model.Listener;
-import ipk.model.Role;
+import ipk.model.*;
 import ipk.repository.GroupRepository;
 import ipk.service.GroupService;
+import ipk.service.LessonService;
 import ipk.service.ListenerService;
 import ipk.service.RoleService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,11 +16,14 @@ public class GroupServiceImpl implements GroupService {
     private final GroupRepository groupRepository;
     private final RoleService roleService;
     private final ListenerService listenerService;
+    private final LessonService lessonService;
 
-    public GroupServiceImpl(GroupRepository groupRepository, RoleService roleService, ListenerService listenerService) {
+    public GroupServiceImpl(GroupRepository groupRepository, RoleService roleService,
+                            ListenerService listenerService, LessonService lessonService) {
         this.groupRepository = groupRepository;
         this.roleService = roleService;
         this.listenerService = listenerService;
+        this.lessonService = lessonService;
     }
 
     @Override
@@ -54,17 +51,17 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public Group updateListener(Listener listener, Group group) {
-        Listener listenerByEmail = listenerService.getByEmail(listener.getEmail());
-        group.getListeners().remove(listenerByEmail);
+        Listener listenerById = listenerService.findById(listener.getId());
+        group.getListeners().remove(listenerById);
         groupRepository.save(group);
         Set<Role> roles = listener.getRoles();
-        listenerByEmail.setRoles(roles);
-        listenerByEmail.setName(listener.getName());
-        listenerByEmail.setSurname(listener.getSurname());
-        listenerByEmail.setEmail(listener.getEmail());
-        listenerService.save(listenerByEmail);
+        listenerById.setRoles(roles);
+        listenerById.setName(listener.getName());
+        listenerById.setSurname(listener.getSurname());
+        listenerById.setEmail(listener.getEmail());
+        listenerService.save(listenerById);
         List<Listener> listeners = group.getListeners();
-        listeners.add(listenerByEmail);
+        listeners.add(listenerById);
         groupRepository.save(group);
         return null;
     }
@@ -78,13 +75,11 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public Page<Group> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
-        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name())
-                ? Sort.by(sortField).ascending() :
-                Sort.by(sortField).descending();
-
-        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
-        return groupRepository.findAll(pageable);
+    public Group deleteLessonFromGroupById(Lesson lesson, Long id) {
+        Group group = groupRepository.findById(id).orElseThrow(RuntimeException::new);
+        group.getLessons().remove(lesson);
+        groupRepository.save(group);
+        return group;
     }
 
     @Override
@@ -97,5 +92,12 @@ public class GroupServiceImpl implements GroupService {
         return groupRepository.getAllLessonsByGroupId(id);
     }
 
-
+    @Override
+    public Group addLessonToGroup(Lesson lesson, Group group) {
+        lessonService.save(lesson);
+        List<Lesson> lessons = group.getLessons();
+        lessons.add(lesson);
+        groupRepository.save(group);
+        return group;
+    }
 }

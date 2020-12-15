@@ -12,20 +12,17 @@
 <div class="container">
     <h1>Listener Management System</h1>
     <hr>
-    <h2>Save Employee</h2>
+    <h2>Save Teacher</h2>
 
-    <form action="#" th:action="@{/{id}/save-listener(id=${group.id})}" th:object="${listener}"
+    <form action="#" th:action="@{/save-teacher}" th:object="${teacher}"
           method="POST">
         <input type="text" th:field="*{name}"
-               placeholder="Listener First Name" class="form-control mb-4 col-4">
+               placeholder="Teacher First Name" class="form-control mb-4 col-4">
 
         <input type="text" th:field="*{surname}"
-               placeholder="Listener Last Name" class="form-control mb-4 col-4">
+               placeholder="Teacher Last Name" class="form-control mb-4 col-4">
 
-        <input type="text" th:field="*{email}"
-               placeholder="Listener Email" class="form-control mb-4 col-4">
-
-        <button type="submit" class="btn btn-info col-2"> Save Employee</button>
+        <button type="submit" class="btn btn-info col-2"> Save Teacher</button>
     </form>
 
     <hr>

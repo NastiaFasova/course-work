@@ -19,13 +19,13 @@ public interface GroupService {
 
     Group deleteListenerFromGroup(Listener listener, Long id);
 
-    public Page<Group> findPaginated(int pageNo,
-                                          int pageSize, String sortField,
-                                          String sortDirection);
+    Group deleteLessonFromGroupById(Lesson lesson, Long id);
 
     Group findById(Long id);
 
     List<Lesson> getAllLessonsByGroupId(long id);
+
+    Group addLessonToGroup(Lesson lesson, Group group);
 }
 
 

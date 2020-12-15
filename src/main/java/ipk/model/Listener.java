@@ -1,9 +1,6 @@
 package ipk.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.util.Set;
 
@@ -18,6 +15,7 @@ public class Listener {
     private String surname;
     private String email;
     private String password;
+    private String matchingPassword;
     @ManyToMany
     private Set<Role> roles;
 }

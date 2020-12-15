@@ -20,4 +20,9 @@ public class LessonServiceImpl implements LessonService {
     public Lesson save(Lesson lesson) {
         return lessonRepository.save(lesson);
     }
+
+    @Override
+    public Lesson getById(Long id) {
+        return lessonRepository.findById(id).orElseThrow(RuntimeException::new);
+    }
 }

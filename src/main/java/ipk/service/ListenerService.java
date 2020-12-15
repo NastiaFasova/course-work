@@ -10,10 +10,6 @@ public interface ListenerService {
 
     Listener getByEmail(String email);
 
-    public Page<Listener> findPaginated(int pageNo,
-                                          int pageSize, String sortField,
-                                          String sortDirection);
-
     Listener findById(long id);
 
     void deleteById(Long id);

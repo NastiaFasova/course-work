@@ -5,6 +5,8 @@ import ipk.repository.DayRepository;
 import ipk.service.DayService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DayServiceImpl implements DayService {
     private final DayRepository dayRepository;
@@ -16,5 +18,10 @@ public class DayServiceImpl implements DayService {
     @Override
     public Day save(Day day) {
         return dayRepository.save(day);
+    }
+
+    @Override
+    public List<Day> getAll() {
+        return dayRepository.findAll();
     }
 }
