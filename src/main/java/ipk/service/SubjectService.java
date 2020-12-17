@@ -2,6 +2,7 @@ package ipk.service;
 
 
 import ipk.model.Subject;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -11,4 +12,8 @@ public interface SubjectService {
     List<Subject> getAll();
 
     Subject getById(long id);
+
+    Subject getByTitle(String subject);
+
+    Object getAllByKeyword(String keyword);
 }

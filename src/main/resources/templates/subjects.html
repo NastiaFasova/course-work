@@ -17,6 +17,11 @@
 
     <a th:href ="@{/create-subject}" class="btn btn-primary btn-sm mb-3"> Add Subject </a>
 
+    <form th:action="@{/subjects}" method="get" class = "table table-striped table-responsive-md">
+        <input id = "txtSearch" type = "text" name="keyword">
+        <button type="submit" class="btn btn-primary">Go</button>
+    </form>
+
     <table border="1" class = "table table-striped table-responsive-md">
         <thead>
         <tr>

@@ -5,23 +5,18 @@ import ipk.repository.GroupRepository;
 import ipk.service.GroupService;
 import ipk.service.LessonService;
 import ipk.service.ListenerService;
-import ipk.service.RoleService;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class GroupServiceImpl implements GroupService {
     private final GroupRepository groupRepository;
-    private final RoleService roleService;
     private final ListenerService listenerService;
     private final LessonService lessonService;
 
-    public GroupServiceImpl(GroupRepository groupRepository, RoleService roleService,
+    public GroupServiceImpl(GroupRepository groupRepository,
                             ListenerService listenerService, LessonService lessonService) {
         this.groupRepository = groupRepository;
-        this.roleService = roleService;
         this.listenerService = listenerService;
         this.lessonService = lessonService;
     }
@@ -40,8 +35,6 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public Group addListenerToGroup(Listener listener, Group group) {
-        Role role = roleService.getRoleByName("LISTENER");
-        listener.setRoles(Set.of(role));
         listenerService.save(listener);
         List<Listener> listeners = group.getListeners();
         listeners.add(listener);
@@ -54,8 +47,6 @@ public class GroupServiceImpl implements GroupService {
         Listener listenerById = listenerService.findById(listener.getId());
         group.getListeners().remove(listenerById);
         groupRepository.save(group);
-        Set<Role> roles = listener.getRoles();
-        listenerById.setRoles(roles);
         listenerById.setName(listener.getName());
         listenerById.setSurname(listener.getSurname());
         listenerById.setEmail(listener.getEmail());
@@ -99,5 +90,10 @@ public class GroupServiceImpl implements GroupService {
         lessons.add(lesson);
         groupRepository.save(group);
         return group;
+    }
+
+    @Override
+    public List<Listener> getListenersByGroupIdAndKeyword(Long id, String keyword) {
+        return groupRepository.getListenersByGroupIdAndKeyword(id, keyword);
     }
 }

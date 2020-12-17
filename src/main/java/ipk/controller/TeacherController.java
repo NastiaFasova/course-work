@@ -1,8 +1,5 @@
 package ipk.controller;
 
-import ipk.model.Group;
-import ipk.model.Listener;
-import ipk.model.Subject;
 import ipk.model.Teacher;
 import ipk.service.TeacherService;
 import org.springframework.stereotype.Controller;
@@ -23,9 +20,13 @@ public class TeacherController {
     }
 
     @GetMapping("/teachers")
-    public String viewHomePage(Model model) {
-        List<Teacher> teachers = teacherService.getAll();
-        model.addAttribute("teachers", teachers);
+    public String viewHomePage(Model model, String keyword) {
+        if(keyword != null) {
+            model.addAttribute("teachers", teacherService.getAllByKeyword(keyword));
+        } else {
+            List<Teacher> teachers = teacherService.getAll();
+            model.addAttribute("teachers", teachers);
+        }
         return "teachers";
     }
 

@@ -26,6 +26,8 @@ public interface GroupService {
     List<Lesson> getAllLessonsByGroupId(long id);
 
     Group addLessonToGroup(Lesson lesson, Group group);
+
+    List<Listener> getListenersByGroupIdAndKeyword(Long id, String keyword);
 }
 
 

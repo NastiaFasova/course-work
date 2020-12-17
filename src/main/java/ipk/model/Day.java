@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -21,7 +22,6 @@ public class Day {
     public Day(DayOfWeek dayOfWeek) {
         this.dayOfWeek = dayOfWeek;
     }
-
     public enum DayOfWeek {
         MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY;
     }

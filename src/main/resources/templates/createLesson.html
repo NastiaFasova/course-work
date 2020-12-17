@@ -14,13 +14,13 @@
     <hr>
     <h2>Save Lesson</h2>
 
-    <form action="#" th:action="@{/{id}/timetable/save-lesson/(id=${group.id})}" th:object="${lesson}"
+    <form action="#" th:action="@{/{id}/save-lesson/(id=${group.id})}" th:object="${lesson}"
           method="POST">
         <select  th:object="${teacher}" class="form-control mb-4 col-4">
             <option value="0">select teacher</option>
             <option th:each="teacher : ${teachers}"
                     th:value="${teacher.name}"
-                    th:text="${teacher.name} +' '+ ${lesson.teacher.surname}"
+                    th:text="${teacher.name} +' '+ ${teacher.surname}"
                     class="form-control mb-4 col-4"></option>
         </select>
 

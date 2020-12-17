@@ -2,6 +2,7 @@ package ipk.service.impl;
 
 import ipk.model.Listener;
 import ipk.repository.ListenerRepository;
+import ipk.service.GroupService;
 import ipk.service.ListenerService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

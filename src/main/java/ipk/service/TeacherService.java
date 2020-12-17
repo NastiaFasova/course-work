@@ -14,5 +14,9 @@ public interface TeacherService {
     Teacher getById(long id);
 
     void deleteTeacherById(long id);
+
+    Teacher getBySurname(String surname);
+
+    List<Teacher> getAllByKeyword(String keyword);
 }
 

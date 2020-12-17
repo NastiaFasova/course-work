@@ -28,7 +28,7 @@
             <td th:text="${group.id}"></td>
             <td th:text="${group.startOfStudying}"></td>
             <td> <a th:href="@{/{id}/listeners/(id=${group.id})}" class="btn btn-primary">Show listeners</a>
-                <a th:href="@{/{id}/timetable/(id=${group.id})}" class="btn btn-danger">Show timetable</a>
+                <a th:href="@{/{id}/timetable(id=${group.id})}" class="btn btn-danger">Show timetable</a>
             </td>
         </tr>
         </tbody>

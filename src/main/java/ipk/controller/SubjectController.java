@@ -18,9 +18,13 @@ public class SubjectController {
     }
 
     @GetMapping("/subjects")
-    public String viewHomePage(Model model) {
-        List<Subject> subjects = subjectService.getAll();
-        model.addAttribute("subjects", subjects);
+    public String viewSubjects(Model model, String keyword) {
+        if(keyword != null) {
+            model.addAttribute("subjects", subjectService.getAllByKeyword(keyword));
+        } else {
+            List<Subject> subjects = subjectService.getAll();
+            model.addAttribute("subjects", subjects);
+        }
         return "subjects";
     }
 

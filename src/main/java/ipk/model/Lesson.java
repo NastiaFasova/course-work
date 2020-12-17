@@ -20,7 +20,7 @@ public class Lesson {
     private Teacher teacher;
     @ManyToOne
     private Subject subject;
-    @OneToMany
+    @ManyToMany
     private Set<Day> days;
     private LocalTime time;
 

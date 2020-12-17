@@ -35,4 +35,14 @@ public class TeacherServiceImpl implements TeacherService {
     public void deleteTeacherById(long id) {
         teacherRepository.deleteById(id);
     }
+
+    @Override
+    public Teacher getBySurname(String surname) {
+        return teacherRepository.findBySurname(surname);
+    }
+
+    @Override
+    public List<Teacher> getAllByKeyword(String keyword) {
+        return teacherRepository.getAllByKeyword(keyword);
+    }
 }

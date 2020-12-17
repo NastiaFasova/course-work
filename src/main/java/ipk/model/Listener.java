@@ -2,7 +2,6 @@ package ipk.model;
 
 import lombok.Data;
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Data
@@ -14,8 +13,4 @@ public class Listener {
     private String name;
     private String surname;
     private String email;
-    private String password;
-    private String matchingPassword;
-    @ManyToMany
-    private Set<Role> roles;
 }
