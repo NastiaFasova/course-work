@@ -1,4 +1,4 @@
-# Cinema
+# Institute of Advanced Training
 
 ![IAT](/images/ipk.jpg)
 
