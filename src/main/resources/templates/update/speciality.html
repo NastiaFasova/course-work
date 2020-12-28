@@ -2,18 +2,18 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="ISO-8859-1">
-    <title>Listener Management System</title>
+    <title>Speciality Management System</title>
 
     <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 </head>
 <body>
 <div class="container">
-    <h1>Listener Management System</h1>
+    <h1>Speciality Management System</h1>
     <hr>
-    <h2>Update Teacher</h2>
+    <h2>Update Speciality</h2>
 
-    <form action="#" th:action="@{/save-teacher}" th:object="${teacher}"
+    <form action="#" th:action="@{/save-speciality}" th:object="${speciality}"
           method="POST">
 
         <!-- Add hidden form field to handle update -->
@@ -21,9 +21,13 @@
 
         <input type="text" th:field="*{name}" class="form-control mb-4 col-4">
 
-        <input type="text" th:field="*{surname}" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{monthsOfStudying}" class="form-control mb-4 col-4">
 
-        <button type="submit" class="btn btn-info col-2"> Update Teacher</button>
+        <input type="text" th:field="*{numberOfStudyingPerYear}" class="form-control mb-4 col-4">
+
+        <input type="text" th:field="*{dormitory}" class="form-control mb-4 col-4">
+
+        <button type="submit" class="btn btn-info col-2"> Update Speciality</button>
     </form>
 
     <hr>

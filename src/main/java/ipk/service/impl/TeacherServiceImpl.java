@@ -1,11 +1,9 @@
 package ipk.service.impl;
 
-import ipk.model.Subject;
 import ipk.model.Teacher;
 import ipk.repository.TeacherRepository;
 import ipk.service.TeacherService;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service

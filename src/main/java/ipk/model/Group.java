@@ -1,12 +1,18 @@
 package ipk.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Data
@@ -19,6 +25,7 @@ public class Group {
     private Long id;
     @ManyToMany
     private List<Listener> listeners = new ArrayList<>();
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startOfStudying;
     @ManyToMany
     private List<Lesson> lessons = new ArrayList<>();

@@ -1,13 +1,14 @@
 package ipk.controller;
 
-import ipk.model.*;
-import ipk.service.*;
-import org.springframework.stereotype.Controller;
-import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Set;
+import javax.annotation.PostConstruct;
+import ipk.model.*;
+import ipk.service.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
 
 @Controller
 public class InjectDataController {
@@ -18,12 +19,16 @@ public class InjectDataController {
     private final DayService dayService;
     private final GroupService groupService;
     private final LessonService lessonService;
+    private final RoleService roleService;
+    private final PasswordEncoder passwordEncoder;
 
-    public InjectDataController(ListenerService listenerService, SpecialityService specialityService,
+    public InjectDataController(ListenerService listenerService,
+                                SpecialityService specialityService,
                                 TeacherService teacherService,
                                 SubjectService subjectService,
                                 DayService dayService, GroupService groupService,
-                                LessonService lessonService) {
+                                LessonService lessonService, RoleService roleService,
+                                PasswordEncoder passwordEncoder) {
         this.listenerService = listenerService;
         this.specialityService = specialityService;
         this.teacherService = teacherService;
@@ -31,20 +36,42 @@ public class InjectDataController {
         this.dayService = dayService;
         this.groupService = groupService;
         this.lessonService = lessonService;
+        this.roleService = roleService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostConstruct
     public void injectData() {
+        Role adminRole = new Role();
+        adminRole.setRoleName(Role.RoleName.ADMIN);
+        roleService.save(adminRole);
+
+        Role listenerRole = new Role();
+        listenerRole.setRoleName(Role.RoleName.LISTENER);
+        roleService.save(listenerRole);
+
         Listener admin = new Listener();
         admin.setName("Dan");
         admin.setEmail("prylipk099@Gmail.com");
+        admin.setPassword(passwordEncoder.encode("admin"));
         admin.setSurname("Prylipko");
+        admin.setRoles(Set.of(adminRole));
+
+        Listener listener = new Listener();
+        listener.setName("Dan");
+        listener.setEmail("prylipk09@Gmail.com");
+        listener.setPassword(passwordEncoder.encode("listener"));
+        listener.setSurname("Prylipko");
+        listener.setRoles(Set.of(listenerRole));
+        listenerService.save(listener);
 
         listenerService.save(admin);
         Listener listener1 = new Listener();
         listener1.setName("Olha");
         listener1.setSurname("Kyrychuk");
-        listener1.setEmail("kyrychuk@Gmail.com");
+        listener1.setEmail("kyrych@Gmail.com");
+        listener1.setPassword(passwordEncoder.encode("1111"));
+        listener1.setRoles(Set.of(listenerRole));
         listenerService.save(listener1);
         Listener listener2 = new Listener();
         listener2.setName("Ivan");
@@ -313,6 +340,8 @@ public class InjectDataController {
                 Set.of(friday), LocalTime.of(17, 30));
         Lesson lesson20 = new Lesson(teacher16, subject14,
                 Set.of(wednesday), LocalTime.of(17, 30));
+        Lesson lesson21 = new Lesson(teacher16, subject11,
+                Set.of(wednesday), LocalTime.of(17, 30));
         lessonService.save(lesson1);
         lessonService.save(lesson2);
         lessonService.save(lesson3);
@@ -333,27 +362,35 @@ public class InjectDataController {
         lessonService.save(lesson18);
         lessonService.save(lesson19);
         lessonService.save(lesson20);
+        lessonService.save(lesson21);
 
         Group group1 = new Group();
         group1.setStartOfStudying(LocalDate.of(2020, 9, 1));
-        group1.setListeners(List.of(listener1, listener2, listener3,  listener7, listener20, listener21,
+        group1.setListeners(List.of(listener1, listener2, listener3,
+                listener7, listener20, listener21,
                 listener12, listener15, listener4));
-        group1.setLessons(List.of(lesson1, lesson2, lesson3, lesson10, lesson9, lesson11, lesson20, lesson15));
+        group1.setLessons(List.of(lesson1, lesson2, lesson3, lesson10,
+                lesson9, lesson11, lesson20, lesson15));
         Group group2 = new Group();
         group2.setStartOfStudying(LocalDate.of(2020, 9, 1));
         group2.setListeners(List.of(listener1, listener5, listener15, listener11,
                 listener19, listener25, listener29, listener17));
-        group2.setLessons(List.of(lesson3, lesson7,  lesson6, lesson12,  lesson15, lesson1, lesson10, lesson11));
+        group2.setLessons(List.of(lesson3, lesson7,  lesson6, lesson12,
+                lesson15, lesson1, lesson10, lesson11));
         Group group3 = new Group();
         group3.setStartOfStudying(LocalDate.of(2020, 9, 1));
-        group3.setListeners(List.of(listener1, listener15, listener13, listener10, listener11, listener19, listener8,
+        group3.setListeners(List.of(listener1, listener15, listener13,
+                listener10, listener11, listener19, listener8,
                 listener6, listener7));
-        group3.setLessons(List.of(lesson1, lesson2, lesson9, lesson14, lesson8, lesson16, lesson3, lesson20));
+        group3.setLessons(List.of(lesson1, lesson2, lesson9, lesson14,
+                lesson8, lesson16, lesson3, lesson20));
         Group group4 = new Group();
         group4.setStartOfStudying(LocalDate.of(2020, 9, 1));
-        group4.setListeners(List.of(listener1, listener11, listener15, listener16,  listener21, listener22, listener23,
+        group4.setListeners(List.of(listener1, listener11, listener15,
+                listener16,  listener21, listener22, listener23,
                 listener28, listener4, listener14));
-        group4.setLessons(List.of(lesson1, lesson4,  lesson11, lesson3, lesson9, lesson12, lesson18, lesson20));
+        group4.setLessons(List.of(lesson1, lesson4,  lesson11, lesson3,
+                lesson9, lesson12, lesson18, lesson20));
         groupService.save(group1);
         groupService.save(group2);
         groupService.save(group3);

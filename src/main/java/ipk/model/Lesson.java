@@ -1,11 +1,12 @@
 package ipk.model;
 
+import java.util.Set;
+import javax.persistence.*;
+import java.time.LocalTime;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import javax.persistence.*;
-import java.time.LocalTime;
-import java.util.Set;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Data
@@ -22,6 +23,7 @@ public class Lesson {
     private Subject subject;
     @ManyToMany
     private Set<Day> days;
+    @DateTimeFormat(pattern = "HH:mm")
     private LocalTime time;
 
     public Lesson(Teacher teacher, Subject subject,

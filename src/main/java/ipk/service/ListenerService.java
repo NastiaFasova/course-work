@@ -1,8 +1,6 @@
 package ipk.service;
 
 import ipk.model.Listener;
-import ipk.model.Speciality;
-import org.springframework.data.domain.Page;
 
 public interface ListenerService {
 

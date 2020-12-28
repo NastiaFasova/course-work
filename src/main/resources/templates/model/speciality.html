@@ -15,7 +15,7 @@
 
 <div class="container my-2">
     <h1>Speciality List</h1>
-
+    <a th:href ="@{/create-speciality}" class="btn btn-primary btn-sm mb-3"> Add Speciality </a>
     <table border="1" class = "table table-striped table-responsive-md">
         <thead>
         <tr>
@@ -35,7 +35,8 @@
                 <a th:href="@{'/page/' + ${currentPage} + '?sortField=dormitory&sortDir=' + ${reverseSortDir}}">
                     The presence of dormitory</a>
             </th>
-            <th> Actions </th>
+            <th> Groups </th>
+            <th>    Actions </th>
         </tr>
         </thead>
         <tbody>
@@ -45,6 +46,8 @@
             <td th:text="${speciality.monthsOfStudying}"></td>
             <td th:text="${speciality.dormitory}"></td>
             <td> <a th:href="@{/{id}(id=${speciality.id})}" class="btn btn-primary">Groups</a>
+            <td> <a th:href="@{/{id}/update-speciality(id=${speciality.id})}" class="btn btn-primary">Update</a>
+             <a th:href="@{/{id}/delete-speciality(id=${speciality.id})}" class="btn btn-danger">Delete</a>
             </td>
         </tr>
         </tbody>

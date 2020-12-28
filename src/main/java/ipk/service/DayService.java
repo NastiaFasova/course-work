@@ -1,8 +1,7 @@
 package ipk.service;
 
-import ipk.model.Day;
-
 import java.util.List;
+import ipk.model.Day;
 
 public interface DayService {
     Day save(Day day);

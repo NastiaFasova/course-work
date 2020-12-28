@@ -1,13 +1,12 @@
 package ipk.controller;
 
-import ipk.model.*;
+import java.util.List;
+
+import ipk.model.Subject;
 import ipk.service.SubjectService;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 public class SubjectController {
@@ -25,26 +24,27 @@ public class SubjectController {
             List<Subject> subjects = subjectService.getAll();
             model.addAttribute("subjects", subjects);
         }
-        return "subjects";
+        return "model/subjects";
     }
 
     @GetMapping("/create-subject")
-    public String showNewEmployeeForm( Model model) {
+    public String showNewSubjectForm( Model model) {
         Subject subject = new Subject();
         model.addAttribute("subject", subject);
-        return "create-subject";
+        return "create/subject";
     }
 
     @PostMapping("/save-subject")
-    public String saveEmployee(@ModelAttribute("subject") Subject subject) {
+    public String saveSubject(@ModelAttribute("subject") Subject subject) {
         subjectService.save(subject);
         return "redirect:/subjects";
     }
 
     @GetMapping("/update-subject/{id}")
-    public String showFormForUpdate(@PathVariable ( value = "id") long id, Model model) {
+    public String showFormForSubjectUpdate(@PathVariable ( value = "id") long id,
+                                           Model model) {
         Subject subject = subjectService.getById(id);
         model.addAttribute("subject", subject);
-        return "update-subject";
+        return "update/subject";
     }
 }
