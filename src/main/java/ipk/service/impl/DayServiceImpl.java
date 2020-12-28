@@ -1,18 +1,15 @@
 package ipk.service.impl;
 
+import java.util.List;
 import ipk.model.Day;
 import ipk.repository.DayRepository;
 import ipk.service.DayService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class DayServiceImpl implements DayService {
+    private static final Logger LOGGER = Logger.getLogger(DayServiceImpl.class);
     private final DayRepository dayRepository;
 
     public DayServiceImpl(DayRepository dayRepository) {
@@ -21,11 +18,13 @@ public class DayServiceImpl implements DayService {
 
     @Override
     public Day save(Day day) {
+        LOGGER.info("The day was saved");
         return dayRepository.save(day);
     }
 
     @Override
     public List<Day> getAll() {
+        LOGGER.info("The days wer retrieved");
         return dayRepository.findAll();
     }
 }

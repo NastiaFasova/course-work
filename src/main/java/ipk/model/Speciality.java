@@ -1,11 +1,10 @@
 package ipk.model;
 
+import java.util.List;
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Data
@@ -23,7 +22,8 @@ public class Speciality {
     @OneToMany
     private List<Group> groups;
 
-    public Speciality(String name, int numberOfStudyingPerYear, int monthsOfStudying, boolean dormitory) {
+    public Speciality(String name, int numberOfStudyingPerYear,
+                      int monthsOfStudying, boolean dormitory) {
         this.name = name;
         this.numberOfStudyingPerYear = numberOfStudyingPerYear;
         this.monthsOfStudying = monthsOfStudying;

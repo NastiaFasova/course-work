@@ -1,7 +1,9 @@
 package ipk.model;
 
-import lombok.Data;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
+import lombok.Data;
 
 @Entity
 @Data
@@ -12,5 +14,9 @@ public class Listener {
     private Long id;
     private String name;
     private String surname;
+    @Column(unique = true)
     private String email;
+    private String password;
+    @ManyToMany
+    private Set<Role> roles = new HashSet<>();
 }

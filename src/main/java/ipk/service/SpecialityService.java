@@ -1,10 +1,9 @@
 package ipk.service;
 
+import java.util.List;
 import ipk.model.Group;
 import ipk.model.Speciality;
 import org.springframework.data.domain.Page;
-
-import java.util.List;
 
 public interface SpecialityService {
     Speciality save(Speciality speciality);
@@ -18,4 +17,8 @@ public interface SpecialityService {
                                           String sortDirection);
 
     List<Group> findGroupsBySpecialityId(Long id);
+
+    void deleteById(long id);
+
+    Speciality addGroupToSpeciality(Group group, Speciality speciality);
 }

@@ -1,12 +1,11 @@
 package ipk.service;
 
+import java.util.List;
 import ipk.model.Group;
 import ipk.model.Lesson;
 import ipk.model.Listener;
 import ipk.model.Speciality;
 import org.springframework.data.domain.Page;
-
-import java.util.List;
 
 public interface GroupService {
     Group save(Group group);
@@ -28,6 +27,10 @@ public interface GroupService {
     Group addLessonToGroup(Lesson lesson, Group group);
 
     List<Listener> getListenersByGroupIdAndKeyword(Long id, String keyword);
+
+    Group updateLessonInGroup(Lesson lesson, Group group);
+
+    void deleteGroupByIdFromSpeciality(long id, long groupId);
 }
 
 

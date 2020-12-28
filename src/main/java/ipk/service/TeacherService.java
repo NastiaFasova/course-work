@@ -1,10 +1,7 @@
 package ipk.service;
 
-
-import ipk.model.Subject;
-import ipk.model.Teacher;
-
 import java.util.List;
+import ipk.model.Teacher;
 
 public interface TeacherService {
     Teacher save(Teacher role);

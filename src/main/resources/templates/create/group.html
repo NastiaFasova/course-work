@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="ISO-8859-1">
-    <title>Employee Management System</title>
+    <title>Group Management System</title>
     <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
@@ -10,19 +10,16 @@
 </head>
 <body>
 <div class="container">
-    <h1>Listener Management System</h1>
+    <h1>Group Management System</h1>
     <hr>
-    <h2>Save Teacher</h2>
+    <h2>Save Group</h2>
 
-    <form action="#" th:action="@{/save-teacher}" th:object="${teacher}"
+    <form action="#" th:action="@{/{id}/save-group(id=${speciality.id})}" th:object="${group}"
           method="POST">
-        <input type="text" th:field="*{name}"
-               placeholder="Teacher First Name" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{{startOfStudying}}"
+               placeholder="startOfStudying" class="form-control mb-4 col-4">
 
-        <input type="text" th:field="*{surname}"
-               placeholder="Teacher Last Name" class="form-control mb-4 col-4">
-
-        <button type="submit" class="btn btn-info col-2"> Save Teacher</button>
+        <button type="submit" class="btn btn-info col-2"> Save Group</button>
     </form>
 
     <hr>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Subject Management System</title>
+
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h1>Subject Management System</h1>
+    <hr>
+    <h2>Update Teacher</h2>
+
+    <form action="#" th:action="@{/save-subject}" th:object="${subject}"
+          method="POST">
+
+        <!-- Add hidden form field to handle update -->
+        <input type="hidden" th:field="*{id}" />
+
+        <input type="text" th:field="*{title}" class="form-control mb-4 col-4">
+
+        <button type="submit" class="btn btn-info col-2"> Update Subject</button>
+    </form>
+
+    <hr>
+
+    <a th:href="@{/}" class="btn btn-primary">Back to the Speciality List</a>
+</div>
+</body>
+</html>

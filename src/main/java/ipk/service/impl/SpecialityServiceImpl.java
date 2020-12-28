@@ -1,7 +1,9 @@
 package ipk.service.impl;
 
+import java.util.List;
 import ipk.model.Group;
 import ipk.model.Speciality;
+import ipk.repository.GroupRepository;
 import ipk.repository.SpecialityRepository;
 import ipk.service.SpecialityService;
 import org.springframework.data.domain.Page;
@@ -10,14 +12,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class SpecialityServiceImpl implements SpecialityService {
     private final SpecialityRepository specialityRepository;
+    private final GroupRepository groupRepository;
 
-    public SpecialityServiceImpl(SpecialityRepository specialityRepository) {
+    public SpecialityServiceImpl(SpecialityRepository specialityRepository,
+                                 GroupRepository groupRepository) {
         this.specialityRepository = specialityRepository;
+        this.groupRepository = groupRepository;
     }
 
     @Override
@@ -50,5 +53,18 @@ public class SpecialityServiceImpl implements SpecialityService {
     @Override
     public List<Group> findGroupsBySpecialityId(Long id) {
         return specialityRepository.findGroupsBySpecialityId(id);
+    }
+
+    @Override
+    public void deleteById(long id) {
+        specialityRepository.deleteById(id);
+    }
+
+    @Override
+    public Speciality addGroupToSpeciality(Group group, Speciality speciality) {
+        speciality.getGroups().add(group);
+        groupRepository.save(group);
+        specialityRepository.save(speciality);
+        return speciality;
     }
 }
