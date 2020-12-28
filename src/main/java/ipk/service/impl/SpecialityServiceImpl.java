@@ -6,6 +6,7 @@ import ipk.model.Speciality;
 import ipk.repository.GroupRepository;
 import ipk.repository.SpecialityRepository;
 import ipk.service.SpecialityService;
+import org.apache.log4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SpecialityServiceImpl implements SpecialityService {
+    private static final Logger LOGGER = Logger.getLogger(SpecialityServiceImpl.class);
     private final SpecialityRepository specialityRepository;
     private final GroupRepository groupRepository;
 
@@ -25,17 +27,20 @@ public class SpecialityServiceImpl implements SpecialityService {
 
     @Override
     public Speciality save(Speciality speciality) {
+        LOGGER.info("The speciality was saved");
         return specialityRepository.save(speciality);
     }
 
     @Override
     public Speciality getById(Long id) {
+        LOGGER.info("The speciality was retrieved by id");
         return specialityRepository.findById(id)
                 .orElseThrow(RuntimeException::new);
     }
 
     @Override
     public List<Speciality> getAll() {
+        LOGGER.info("The specialities were retrieved");
         return specialityRepository.findAll();
     }
 
@@ -52,11 +57,13 @@ public class SpecialityServiceImpl implements SpecialityService {
 
     @Override
     public List<Group> findGroupsBySpecialityId(Long id) {
+        LOGGER.info("The groups of speciality were retrieved");
         return specialityRepository.findGroupsBySpecialityId(id);
     }
 
     @Override
     public void deleteById(long id) {
+        LOGGER.info("The speciality was removed");
         specialityRepository.deleteById(id);
     }
 
@@ -65,6 +72,7 @@ public class SpecialityServiceImpl implements SpecialityService {
         speciality.getGroups().add(group);
         groupRepository.save(group);
         specialityRepository.save(speciality);
+        LOGGER.info("The group was added to speciality");
         return speciality;
     }
 }
