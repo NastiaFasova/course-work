@@ -1,12 +1,12 @@
 package ipk.controller;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.List;
 import ipk.model.Day;
 import ipk.model.Group;
 import ipk.model.Lesson;
 import ipk.model.Listener;
+import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import ipk.model.Speciality;
 import ipk.model.Subject;
 import ipk.model.Teacher;
@@ -19,7 +19,10 @@ import ipk.service.SubjectService;
 import ipk.service.TeacherService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class GroupController {
@@ -45,7 +48,7 @@ public class GroupController {
     }
 
     @GetMapping("/{id}")
-    public String getGroupsById(@PathVariable (value = "id") Long id, Model model) {
+    public String getGroupsById(@PathVariable(value = "id") Long id, Model model) {
         List<Group> groups = specialityService.findGroupsBySpecialityId(id);
         Speciality speciality = specialityService.getById(id);
         model.addAttribute("groups", groups);
@@ -131,12 +134,12 @@ public class GroupController {
                                        Listener listener) {
         Group group = groupService.findById(id);
         groupService.updateListener(listener, group);
-        return ( "redirect:/{id}/listeners");
+        return ("redirect:/{id}/listeners");
     }
 
     @GetMapping("/{id}/update-listener/{listener-id}")
-    public String showFormForListenerUpdate(@PathVariable ( value = "id") long id,
-                                    @PathVariable ( value = "listener-id") long listenerId,
+    public String showFormForListenerUpdate(@PathVariable( value = "id") long id,
+                                    @PathVariable( value = "listener-id") long listenerId,
                                             Model model) {
         Listener listener = listenerService.findById(listenerId);
         Group group = groupService.findById(id);
@@ -153,8 +156,8 @@ public class GroupController {
     }
 
     @GetMapping("/{id}/delete-listener/{listener-id}")
-    public String deleteListener(@PathVariable (value = "id") long id,
-                                 @PathVariable ( value = "listener-id") long listenerId) {
+    public String deleteListener(@PathVariable(value = "id") long id,
+                                 @PathVariable( value = "listener-id") long listenerId) {
         Listener listener = listenerService.findById(listenerId);
         groupService.deleteListenerFromGroup(listener, id);
         return "redirect:/{id}/listeners";
@@ -171,10 +174,9 @@ public class GroupController {
         return "model/timetable";
     }
 
-
     @GetMapping("{id}/delete-lesson/{lesson-id}")
-    public String removeLesson(@PathVariable (value = "id") long id,
-                               @PathVariable ( value = "lesson-id") long lessonId) {
+    public String removeLesson(@PathVariable(value = "id") long id,
+                               @PathVariable( value = "lesson-id") long lessonId) {
         Lesson lesson = lessonService.getById(lessonId);
         groupService.deleteLessonFromGroupById(lesson, id);
         return "redirect:/{id}/timetable";
@@ -205,7 +207,6 @@ public class GroupController {
         return "redirect:/{id}/timetable";
     }
 
-
     @PostMapping("/{id}/save-lesson")
     public String saveLesson(@PathVariable (value = "id") Long id,
                                @ModelAttribute("lesson")
@@ -213,12 +214,12 @@ public class GroupController {
         Group group = groupService.findById(id);
         lesson.setId(null);
         groupService.addLessonToGroup(lesson, group);
-        return ( "redirect:/{id}/timetable");
+        return ("redirect:/{id}/timetable");
     }
 
     @GetMapping("/{id}/update-lesson/{lesson-id}")
-    public String showFormForUpdateLesson(@PathVariable ( value = "id") long id,
-                                    @PathVariable ( value = "lesson-id") long lessonId,
+    public String showFormForUpdateLesson(@PathVariable( value = "id") long id,
+                                    @PathVariable( value = "lesson-id") long lessonId,
                                           Model model) {
         Lesson lesson = lessonService.getById(lessonId);
         Group group = groupService.findById(id);
